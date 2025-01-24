@@ -14,7 +14,31 @@ public class Maze {
     private static final Logger logger = LogManager.getLogger();
     protected List<List<Character>> maze = new ArrayList<>();
 
-    //
+    public void readInputFile(String inputFile) {
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(inputFile));
+            String line;
+
+            while ((line = reader.readLine()) != null) {
+                line = line.trim();
+                List<Character> row = new ArrayList<>(getWidth());
+
+                if (line.isEmpty()) {
+                    for (int i=0; i <getWidth(); i++) {
+                        row.add(' ');
+                    }
+                } else {
+                    for (char c: line.toCharArray()) {
+                        row.add(c);
+                    }
+                }
+                maze.add(row);
+            }
+            reader.close();
+        } catch (IOException e) {
+            logger.error("Error: " + e.getMessage());
+        }
+    }
 
     public void outputMaze() throws Exception {
         for (List<Character> row: maze) {
