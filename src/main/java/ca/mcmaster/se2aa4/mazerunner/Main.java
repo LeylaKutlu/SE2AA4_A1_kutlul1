@@ -6,15 +6,17 @@ import java.io.FileReader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.commons.cli.*;
+import java.util.List;
+import java.util.ArrayList;
 
 public class Main {
-
     private static final Logger logger = LogManager.getLogger();
 
     public static void main(String[] args) {
         logger.info("** Starting Maze Runner");
         Options options = new Options();
         options.addOption("i", "input", true, "Maze file to read");
+        //options.addOption("p", "compare", true, "Path to compare");
 
         CommandLineParser parser = new DefaultParser();
         HelpFormatter formatter = new HelpFormatter();
@@ -22,25 +24,25 @@ public class Main {
         try {
             CommandLine cmd = parser.parse(options, args);
             String inputFile = cmd.getOptionValue("i");
+            //String comparePath = cmd.getOptionValue("p");
 
-            logger.info("**** Reading the maze from file " + inputFile);
-            BufferedReader reader = new BufferedReader(new FileReader(inputFile));
-            String line;
-            while ((line = reader.readLine()) != null) {
-                for (int idx = 0; idx < line.length(); idx++) {
-                    if (line.charAt(idx) == '#') {
-                        logger.info("WALL "); 
-                    } else if (line.charAt(idx) == ' ') {
-                        logger.info("PASS "); //logger
-                    }
-                }
-                System.out.print(System.lineSeparator());
+            if (inputFile == null) {
+                logger.error("Please enter valid input file");
+                return;
             }
+
+            logger.debug("**** Reading the maze from file " + inputFile);
+            Maze maze = new Maze();
+            maze.readInputFile(inputFile);
+            maze.outputMaze();
+
+            //
+
         } catch(Exception e) {
             logger.error("/!\\ An error has occured /!\\");
+            logger.error(e.getMessage());
         }
-        logger.info("**** Computing path");
-        logger.warn("PATH NOT COMPUTED");
+    
         logger.info("** End of MazeRunner");
 
         //trace < debug < info < warn < error < fatal
