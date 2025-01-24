@@ -36,7 +36,10 @@ public class Main {
             maze.readInputFile(inputFile);
             maze.outputMaze();
 
-            //
+            logger.info("**** Computing path");
+            Path path = new Path();
+            String outputPath = path.pathFinder(maze);
+            logger.info("Path: " + outputPath);
 
         } catch(Exception e) {
             logger.error("/!\\ An error has occured /!\\");

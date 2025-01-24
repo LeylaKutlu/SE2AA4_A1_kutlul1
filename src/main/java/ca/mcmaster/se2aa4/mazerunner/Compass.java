@@ -34,4 +34,12 @@ public class Compass {
     public int[] getDirection() {
         return DIRECTIONS[direction];
     }
+
+    public void moveForward() {
+        row += DIRECTIONS[direction][0];
+        col += DIRECTIONS[direction][1];
+    }
+
+    public void turnRight() {
+    }
 }
