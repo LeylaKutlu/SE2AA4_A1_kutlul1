@@ -71,5 +71,21 @@ public class Maze {
         }
     }
 
-    //
+    public boolean isClear(int row, int col) {
+        if (row < 0 || row >= maze.size()) {
+            return false;
+        } else if (col < 0 || col >= maze.get(row).size()) {
+            return false;
+        }
+        return maze.get(row).get(col) == ' ';
+    }
+
+    public int[] findEntry(Maze maze) { //include exception
+        for (int row = 0; row < maze.getHeight(); row++) {
+            if (maze.isClear(row, 0)) {
+                return new int[]{row, 0};
+            }
+        }
+        return null;
+    } 
 }
